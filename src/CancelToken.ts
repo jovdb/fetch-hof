@@ -47,7 +47,12 @@ namespace jo {
 
     public subscribe(cb: (error: TCancelError) => void): () => void {
 
-      // subscribe
+      // Already Canceled?
+      if (this._error) {
+        cb(this._error);
+        return () => undefined;
+      }
+
       if (!this._listeners) return () => undefined;
       this._listeners.push(cb);
 
@@ -68,21 +73,21 @@ namespace jo {
       if (this._requested) throw this._error;
     }
 
-    /** Create a child token that will cancel if the parent cancels, but can independently be canceled without affecting the parent */
-    public createChildToken<TChildCancelError extends CancelError = TCancelError | CancelError>(executer?: (cancel: (error: TChildCancelError) => void) => void) {
-      return new CancelToken<TChildCancelError | TCancelError>(cancel => {
-        this.subscribe(error => cancel(error));
-      });
-    }
+    // /** Create a child token that will cancel if the parent cancels, but can independently be canceled without affecting the parent */
+    // public createChildToken<TChildCancelError extends CancelError = TCancelError | CancelError>(executer?: (cancel: (error: TChildCancelError) => void) => void) {
+    //   return new CancelToken<TChildCancelError | TCancelError>(cancel => {
+    //     this.subscribe(error => cancel(error));
+    //   });
+    // }
 
-    /** Create a new token that will cancel if one of the specified tokens cancels */
-    static race(...tokens: CancelToken[]) {
-      return new CancelToken(cancel => {
-        for (const token of tokens) {
-          token.subscribe(error => cancel(error));
-        }
-      });
-    }
+    // /** Create a new token that will cancel if one of the specified tokens cancels */
+    // static race(...tokens: CancelToken[]) {
+    //   return new CancelToken(cancel => {
+    //     for (const token of tokens) {
+    //       token.subscribe(error => cancel(error));
+    //     }
+    //   });
+    // }
 
     static source<TCancelError extends CancelError = CancelError>() {
       let _cancel: ((error: TCancelError) => void) | undefined;
