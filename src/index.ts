@@ -101,12 +101,12 @@ namespace jo {
       // Here the signature changes
       fetch => (cancelToken: CancelToken | undefined) => fetch(url, { cancelToken } as RequestInit) // use cancelToken as input, so each HOF can use the current one instead of the global one
         .then(response => {
-          if (cancelToken) cancelToken.cancelIfRequested();
+          if (cancelToken) cancelToken.throwIfRequested();
           logger.log("Reading response as blob...");
           return response.blob();
         })
         .then(blob => {
-          if (cancelToken) cancelToken.cancelIfRequested();
+          if (cancelToken) cancelToken.throwIfRequested();
           logger.log("Reading image from blob...");
           return loadImageAsync(URL.createObjectURL(blob));
         })

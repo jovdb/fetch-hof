@@ -17,7 +17,7 @@ namespace jo {
     subscribe(cb: (error: TCancelError) => void): () => void;
 
     /** Synchronously throws a CancelError if cancellation has been requested for this token. */
-    cancelIfRequested(): void;
+    throwIfRequested(): void;
   }
   // source(): { token, cancel }
 
@@ -64,7 +64,7 @@ namespace jo {
     }
 
     /** Synchronously throws a CancelError if cancellation has been requested for this token. */
-    public cancelIfRequested(): void {
+    public throwIfRequested(): void {
       if (this._requested) throw this._error;
     }
 

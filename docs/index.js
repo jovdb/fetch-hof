@@ -94,7 +94,7 @@ var jo;
             };
         }
         /** Synchronously throws a CancelError if cancellation has been requested for this token. */
-        cancelIfRequested() {
+        throwIfRequested() {
             if (this._requested)
                 throw this._error;
         }
@@ -255,7 +255,7 @@ var jo;
         };
         return new Promise((resolve, reject) => {
             if (cancelToken)
-                cancelToken.cancelIfRequested();
+                cancelToken.throwIfRequested();
             const timeoutId = setTimeout(() => {
                 unsubscribe();
                 resolve(value);
@@ -289,7 +289,7 @@ var jo;
                     // this occurs if cancel() was called before server responded (before fetch() Promise resolved)
                     if (cancelToken.requested) {
                         response.body.getReader().cancel();
-                        cancelToken.cancelIfRequested();
+                        cancelToken.throwIfRequested();
                     }
                 }
                 // Server must send CORS header "Access-Control-Expose-Headers: content-length" to access
@@ -310,7 +310,7 @@ var jo;
                                 reader.cancel();
                                 // TODO: CancelError not available
                                 try {
-                                    cancelToken.cancelIfRequested();
+                                    cancelToken.throwIfRequested();
                                 }
                                 catch (cancelError) {
                                     controller.error(cancelError);
@@ -492,7 +492,7 @@ var jo;
                     // Throw if error, this will reject the promise
                     try {
                         if (cancelToken) {
-                            cancelToken.cancelIfRequested();
+                            cancelToken.throwIfRequested();
                         }
                     }
                     catch (err) {
@@ -611,13 +611,13 @@ var jo;
         fetch => (cancelToken) => fetch(url, { cancelToken }) // use cancelToken as input, so each HOF can use the current one instead of the global one
             .then(response => {
             if (cancelToken)
-                cancelToken.cancelIfRequested();
+                cancelToken.throwIfRequested();
             jo.logger.log("Reading response as blob...");
             return response.blob();
         })
             .then(blob => {
             if (cancelToken)
-                cancelToken.cancelIfRequested();
+                cancelToken.throwIfRequested();
             jo.logger.log("Reading image from blob...");
             return loadImageAsync(URL.createObjectURL(blob));
         })

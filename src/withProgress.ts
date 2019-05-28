@@ -28,7 +28,7 @@ namespace jo {
             // this occurs if cancel() was called before server responded (before fetch() Promise resolved)
             if (cancelToken.requested) {
               response.body.getReader().cancel();
-              cancelToken.cancelIfRequested();
+              cancelToken.throwIfRequested();
             }
           }
 
@@ -57,7 +57,7 @@ namespace jo {
                     reader.cancel();
 // TODO: CancelError not available
                     try {
-                      cancelToken.cancelIfRequested();
+                      cancelToken.throwIfRequested();
                     } catch (cancelError) {
                       controller.error(cancelError);
                     }

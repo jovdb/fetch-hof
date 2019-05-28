@@ -20,7 +20,7 @@ namespace jo {
 
     return new Promise<TValue>((resolve, reject) => {
 
-      if (cancelToken) cancelToken.cancelIfRequested();
+      if (cancelToken) cancelToken.throwIfRequested();
 
       const timeoutId = setTimeout(() => {
         unsubscribe();

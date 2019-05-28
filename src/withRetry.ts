@@ -22,7 +22,7 @@ namespace jo {
           // Throw if error, this will reject the promise
           try {
             if (cancelToken) {
-              cancelToken.cancelIfRequested();
+              cancelToken.throwIfRequested();
             }
           } catch(err) {
             logger.error("Retry detected a Cancelation.");
