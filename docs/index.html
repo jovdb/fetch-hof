@@ -1,0 +1,69 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h2>Testing some higher order functions with abortability</h2>
+  <a href="./tests.html">Unit Tests</a>
+  <fieldset>
+  <form>
+  <p>
+    Get size of this image<br/>
+    <input id="url" type="text" value="https://placekitten.com/g/2000/3000"></input>
+    <button id="exec" type="submit" type="submit">Get Image size</button><br/>
+    <i style="font-size: 0.8em; color: grey">Tip: Throttle network speed to Slow 3G</i>
+  </p>
+
+  <div title="let an invalid response (like HTTP 404) reject the promise">
+    <label><input id="add-http-status" type="checkbox" checked>with HTTP Status validation</label>
+  </div>
+
+  <div title="Provides a progress callback">
+    <label><input id="add-progress" type="checkbox" checked>with fetch progress </label><progress id="progress" value="0" max="100" min="0"  style="width:100px; display: none"></progress> <span id="progress-text"></span>
+  </div>
+
+  <div title="Add random delays and errors">
+    <label><input id="add-chaos" type="checkbox" checked>with <a href="https://netflix.github.io/chaosmonkey/" target="new">Chaos Monkey</a></label>
+  </div>
+
+  <div title="Only continue if network is online (set offline in DevTools)">
+    <label><input id="add-online-check" type="checkbox" checked>with Network status validation</label>
+  </div>
+
+  <div title="Add request to cache">
+    <label><input id="add-caching" type="checkbox">with caching to <a href="https://developers.google.com/web/tools/chrome-devtools/storage/cache" target="_new">Cache Storage</a></label>
+    <button id="clear-cache">Clear Cache</button>
+  </div>
+
+  <div title="After this timeout of 1 fetch, abort request and reject">
+    <label><input id="add-fetch-timeout" type="checkbox" checked>with timeout on single request after </label>
+    <input id="fetch-timeout" type="number" value="1000" min="0" step="100" style="width:60px"></input>ms
+  </div>
+
+  <div title="Retry on reject after the specified delay">
+    <label><input id="add-retry" type="checkbox" checked>with retry </label><input id="retry-count" type="number" value="2" min="0" max="5" style="width:30px"></input><label for="add-retry"> time(s) with delay of </label><input id="retry-delay" type="number" value="5000" min="0" step="100" style="width:60px"></input>ms
+  </div>
+
+  <div title="After this total timeout, abort request and reject">
+    <label><input id="add-total-timeout" type="checkbox" checked>with total timeout of </label><input id="total-timeout" type="number" value="10000" min="0" step="100" style="width:60px"></input>ms
+  </div>
+
+  <div title="Allow cancel">
+    <label><input id="add-cancel" type="checkbox" checked>with Cancel button: </label>
+    <button id="cancel" disabled>Cancel</button>
+  </div>
+
+  <br/>
+  Logging:
+  <div id="log"/>
+  </form>
+  </fieldset>
+
+  <p>
+    <u>Other higher order functions</u>
+    <li><b>withDebounce</b>: Only execute request if no new request within X ms<br/><br/></li>
+    <li><b>withQueue</b>: Place requests in a queue so they can not execute simultaneous. The requests will be execute one after each other with an optional delay (example: Google Buckets allows only <a href="https://cloud.google.com/storage/quotas">1 update per second</a>)<br/><br/></li>
+    <li><b>withCombine</b>: To reduce multiple requests to the same URL, delay first request and collect inputs of the requests to the same url, if delay passes we merge the collected inputs and execute 1 fetch request. When request returns we extract the response for each requested fetch and resolve them.<br/>Example: <code>GetLabels(keys: readonly string[]): Promise&lt;string[]&gt;</code>. (This is not possible for all signatures.)<br/><br/></li>
+  </p>
+
+  <script src="./index.js"></script>
+</body>

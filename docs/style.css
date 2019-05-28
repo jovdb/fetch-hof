@@ -1,0 +1,77 @@
+
+fieldset {
+  margin-top: 2em;
+}
+
+
+#log, #tests {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+#log .error, #tests .error {
+  color: red;
+}
+
+#log .debug, #tests .debug {
+  color: grey;
+}
+
+.test__result {
+  margin-left: 0.5em;
+}
+
+#url {
+    width: calc(100% - 120px);
+    max-width: 600px;
+    min-width: 200px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.test__result:before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  overflow: visible;
+}
+
+.test__result--failed {
+  color: red;
+}
+
+.test__result--busy:before {
+  content: '◜';
+  animation: rotate linear infinite 0.5s;
+  transform-origin: 36% 50%;
+  color: #888;
+}
+
+.test__result--success:before {
+  content: '✓';
+  color: green;
+}
+
+.test__result--failed:before {
+  content: '✗';
+  color: red;
+}
+
+.error__lines {
+  margin-left: 2.7em;
+  color: red;
+}
+
+.error__line {
+  display: list-item;
+  list-style-type: disc;
+}

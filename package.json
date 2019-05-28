@@ -1,0 +1,16 @@
+{
+  "name": "fetch-hof",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {},
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}
