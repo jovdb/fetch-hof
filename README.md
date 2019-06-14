@@ -6,7 +6,7 @@ Experiment with fetch higher order functions and abortability
 ## Some remarks about the CancelToken
 I based my code on this [CancelToken](https://github.com/zenparsing/es-cancel-token) proposal.
 
-What I didn't like on that proposal is that there is now handy way to get the `CancelError`:
+What I didn't like on that proposal is that there is no handy way to get the `CancelError`:
 - You can wrap `throwIfRequested()` in a try/catch to get the exception
 - You can `promise.then()` to get the CancelToken, but then you have to take the asynchronicity into account.
   
